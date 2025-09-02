@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Location Tracker</string>
+    <string name="location_date_time">Location on <b>%s</b></string>
+    <string name="location_latitude">Latitude: %s</string>
+    <string name="location_longitude">Longitude: %s</string>
+    <string name="location_accuracy">Accuracy: %.2f</string>
+</resources>
