@@ -1,7 +1,6 @@
 package com.android.locationtracker
 
 import android.app.Application
-import android.util.Log
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import androidx.work.WorkManager
@@ -20,7 +19,6 @@ class LocationTrackerApplication : Application() {
             this,
             Configuration.Builder()
                 .setWorkerFactory(hiltWorkerFactory)
-                .setMinimumLoggingLevel(Log.VERBOSE)
                 .build()
         )
     }

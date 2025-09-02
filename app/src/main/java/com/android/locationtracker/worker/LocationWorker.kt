@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
@@ -25,7 +24,6 @@ class LocationWorker @AssistedInject constructor(
 ) : CoroutineWorker(appContext, workerParams) {
 
     override suspend fun doWork(): Result {
-        Log.d("Testing1", "LocationWorker.doWork started")
         val fusedClient = LocationServices.getFusedLocationProviderClient(applicationContext)
 
         // Check permissions explicitly
@@ -43,14 +41,12 @@ class LocationWorker @AssistedInject constructor(
             ) == PackageManager.PERMISSION_GRANTED
         } else true
 
-//        Log.d("Testing1", "doWork LocationWorker is called\nhasFine: $hasFine\nhasCoarse: $hasCoarse")
         if (!hasFine && !hasCoarse) {
             // No permission → fail gracefully (or retry later if you expect user to grant it)
             return Result.failure()
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && !hasBackground) {
-//            Log.d("Testing1", "Missing background location permission -> failing")
             return Result.failure()
         }
 
@@ -60,7 +56,6 @@ class LocationWorker @AssistedInject constructor(
                 null
             ).await()
 
-//            Log.d("Testing1", "doWork location: $location")
             location?.let {
                 val ping = Ping(
                     lat = it.latitude,
@@ -68,17 +63,15 @@ class LocationWorker @AssistedInject constructor(
                     accuracy = it.accuracy,
                     timestamp = System.currentTimeMillis()
                 )
-//                Log.d("Testing1", "doWork ping: $ping")
                 repository.insert(ping)
             }
 
             Result.success()
         } catch (se: SecurityException) {
-            // User revoked permission while worker is running
-//            Log.d("Testing1", "doWork SecurityException: ${se.stackTrace}")
+            se.printStackTrace()
             Result.failure()
         } catch (e: Exception) {
-//            Log.d("Testing1", "doWork Exception: ${e.stackTrace}")
+            e.printStackTrace()
             Result.retry()
         }
     }

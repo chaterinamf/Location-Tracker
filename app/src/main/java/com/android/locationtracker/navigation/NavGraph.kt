@@ -92,7 +92,6 @@ private fun PermissionLauncher() {
                 permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
         if (granted) {
             Toast.makeText(context, "Location permission granted", Toast.LENGTH_SHORT).show()
-//            LocationScheduler.schedule(context)
         } else {
             Toast.makeText(context, "Location permission denied", Toast.LENGTH_SHORT).show()
         }
@@ -104,6 +103,7 @@ private fun PermissionLauncher() {
     ) { granted ->
         if (granted) {
             Toast.makeText(context, "Background location granted", Toast.LENGTH_SHORT).show()
+            LocationScheduler.schedule(context)
         } else {
             Toast.makeText(context, "Background location denied", Toast.LENGTH_SHORT).show()
         }
