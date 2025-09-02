@@ -21,14 +21,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        // ✅ read from local.properties
         val mapsApiKey: String = gradleLocalProperties(rootDir, providers)
             .getProperty("MAPS_API_KEY") ?: ""
 
-        // ✅ for Manifest
         manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
 
-        // ✅ for Kotlin BuildConfig
         buildConfigField("String", "MAPS_API_KEY", "\"$mapsApiKey\"")
     }
 

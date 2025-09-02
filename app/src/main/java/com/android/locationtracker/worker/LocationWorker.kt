@@ -42,7 +42,6 @@ class LocationWorker @AssistedInject constructor(
         } else true
 
         if (!hasFine && !hasCoarse) {
-            // No permission → fail gracefully (or retry later if you expect user to grant it)
             return Result.failure()
         }
 
